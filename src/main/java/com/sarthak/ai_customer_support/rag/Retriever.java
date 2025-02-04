@@ -18,12 +18,12 @@ public class Retriever {
     }
 
     public String retrieveDocuments(String query) {
-        // Fetch relevant documents from DB using keyword search
-        List<Document> documents = documentRepository.findByContentContainingIgnoreCase(query);
+        // Fetch documents containing query keywords
+        List<Document> matchingDocs = documentRepository.findByContentContainingIgnoreCase(query);
 
-        // Combine document content into a single context string
-        return documents.stream()
+        // Combine document contents into a single context
+        return matchingDocs.stream()
                 .map(Document::getContent)
-                .collect(Collectors.joining(" "));
+                .collect(Collectors.joining("\n"));
     }
 }
